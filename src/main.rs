@@ -5,17 +5,12 @@ use panic_halt as _;
 use arduino_uno::prelude::*;
 use arduino_uno::hal::port::portb::PB5;
 use arduino_uno::hal::port::mode::Output;
+use arduino_uno::pins;
 
 #[arduino_uno::entry]
 fn main() -> ! {
     let peripherals = arduino_uno::Peripherals::take().unwrap();
-
-    let mut pins = arduino_uno::Pins::new(
-        peripherals.PORTB,
-        peripherals.PORTC,
-        peripherals.PORTD,
-    );
-
+    let pins = arduino_uno::pins!(peripherals);
     let mut led = pins.d13.into_output(&mut pins.ddr);
 
     loop {
